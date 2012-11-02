@@ -40,3 +40,5 @@ module Postman
   end
 
 end
+
+Postman.set_env(:test)
