@@ -11,12 +11,36 @@ module Postman
   extend Fallen
   extend Fallen::CLI
 
+  URGENT_QUOTA = 100
+  NORMAL_QUOTA = 100
+  LOW_QUOTA = 100
+
+  @@normal_sleep = 0
+  @@low_sleep = 0
+
   def self.run
     while running?
-      mails = MailQueue.first
-      puts "Sending: #{mails.inspect}"
-      Postman.deliver(mails)
-      sleep 10
+
+      urgent = MailUrgent.all(:limit => URGENT_QUOTA)
+      send_mails(urgent)
+
+      @@normal_sleep += 1
+      @@low_sleep += 1
+
+      if(@@normal_sleep == 12)
+        normal = MailNormal.all(:limit => NORMAL_QUOTA)
+        send_mails(normal)
+        @@normal_sleep = 0
+      end
+
+      if(@@low_sleep == 54)
+        low = MailLow.all(:limit => LOW_QUOTA)
+        send_mails(low)
+        @@low_sleep = 0
+      end
+
+      sleep 5
+
     end
   end
 
@@ -35,9 +59,21 @@ module Postman
       puts 'No adapter' #refactor this
     end
   end
+
+  def self.send_mails(mails)
+    mails.each do |mail|
+      begin
+        deliver(mail)
+        mail.destroy
+      rescue DeliverError => e
+        puts e.message
+        puts e.backtrace
+      end
+    end
+  end
 end
 
-smtp = Smtp.new({
+smtp = Postman::Smtp.new({
   :address              => 'smtp.mandrillapp.com',
   :port                 => 587,
   :domain               => 'example.com',

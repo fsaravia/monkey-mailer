@@ -2,7 +2,7 @@ require_relative 'models/mail_queue.rb'
 
 module Postman
 
-  DataMapper::Logger.new($stdout, :debug)
+  #DataMapper::Logger.new($stdout, :debug)
   DataMapper.setup(:default, {
     :adapter  => Postman.config[:database][:adapter],
     :host     => Postman.config[:database][:host],

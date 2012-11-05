@@ -39,6 +39,7 @@ module Postman
     @@environment = env if [:development, :test, :production].include? env
   end
 
+  class DeliverError < StandardError; end
 end
 
 Postman.set_env(:test)
