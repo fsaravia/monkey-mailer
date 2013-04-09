@@ -73,6 +73,7 @@ module Postman
   end
 end
 
+# smtp with gmail example
 smtp = Postman::Smtp.new({
   :address              => 'smtp.mandrillapp.com',
   :port                 => 587,

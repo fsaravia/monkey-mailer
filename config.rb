@@ -42,4 +42,4 @@ module Postman
   class DeliverError < StandardError; end
 end
 
-Postman.set_env(:test)
+Postman.set_env(:production)
