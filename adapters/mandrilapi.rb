@@ -40,8 +40,8 @@ module Postman
 
       @request[:key] = @key
       @request[:message][:to] << { :email => email.to, :name => ''}
-      @request[:message][:from_name] = 'Plupin.com'
-      @request[:message][:from_email] = email.from
+      @request[:message][:from_name] = email.from
+      @request[:message][:from_email] = 'info@plupin.com'
       @request[:message][:html] = email.body
       @request[:message][:text] = email.body.gsub(/<\/?[^>]*>/, "")
       @request[:message][:subject] = email.subject
