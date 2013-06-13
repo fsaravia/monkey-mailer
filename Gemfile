@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 gem "clap"
 gem "fallen"
 gem 'data_mapper'
