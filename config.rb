@@ -1,45 +1,14 @@
 module Postman
-  @@environment = :development
 
-  @@config = {
-    :development => {
-      :database => {
-        :adapter => 'mysql',
-        :host => 'localhost',
-        :username => 'root',
-        :password => 'password',
-        :database => 'test_dev'
-      }
-    },
-    :test => {
-      :database => {
-        :adapter => 'mysql',
-        :host => 'localhost',
-        :username => 'root',
-        :password => 'password',
-        :database => 'test_test'
-      }
-    },
-    :production => {
-      :database => {
-        :adapter => 'mysql',
-        :host => 'localhost',
-        :username => 'root',
-        :password => 'password',
-        :database => 'test_production'
-      }
-    }
-  }
-
-  def self.config
-    @@config[@@environment]
+  def self.environment
+    @@environment ||= YAML.load_file(File.dirname(__FILE__) + '/config/environment.yaml')
+    @@environment['environment']
   end
 
-  def self.set_env(env)
-    @@environment = env if [:development, :test, :production].include? env
+  def self.database
+    @@config ||= YAML.load_file(File.dirname(__FILE__) + '/config/database.yaml')
+    @@config[environment]
   end
 
   class DeliverError < StandardError; end
 end
-
-Postman.set_env(:production)
