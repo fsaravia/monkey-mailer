@@ -1,1 +1,3 @@
 postman-files*
+config/database.yaml
+config/environment.yaml
