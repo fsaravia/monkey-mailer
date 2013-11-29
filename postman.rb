@@ -2,10 +2,10 @@ require 'fallen'
 require 'fallen/cli'
 require 'data_mapper'
 
-require_relative 'config'
-require_relative 'database'
-require_relative 'adapters/smtp'
-require_relative 'adapters/mandrilapi'
+require_relative 'postman/config'
+require_relative 'postman/database'
+require_relative 'postman/adapters/smtp'
+require_relative 'postman/adapters/mandrilapi'
 
 module Postman
   extend Fallen
