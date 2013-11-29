@@ -51,6 +51,6 @@ when "start"
 when "stop"
   Postman.stop!
 else
-  Postman.fallen_usage
+  puts Postman.fallen_usage
 end
 
