@@ -6,6 +6,7 @@ require_relative 'postman/config'
 require_relative 'postman/database'
 require_relative 'postman/adapters/smtp'
 require_relative 'postman/adapters/mandrilapi'
+require_relative 'postman/adapters/dummy'
 
 module Postman
   extend Fallen
@@ -73,16 +74,16 @@ module Postman
   end
 end
 
-# smtp with gmail example
-smtp = Postman::Smtp.new({
-  :address              => 'smtp.mandrillapp.com',
-  :port                 => 587,
-  :domain               => 'example.com',
-  :user_name            => 'user@example.com',
-  :password             => 'example-password',
-  :authentication       => 'plain',
-  :enable_starttls_auto => true
-});
+case Postman.settings['adapter']
+when 'mandrilapi'
+  adapter = Postman::MandrilAPI.new(Postman.settings['mandril_api_key'])
+when 'smtp'
+  adapter = Postman::Smtp.new(Postman.settings['smtp'])
+when 'dummy'
+  adapter = Postman::Dummy.new
+else
+  raise "Adapter #{Postman.settings['adapter']} does not exist"
+end
 
 mandrilapi = MandrilAPI.new("example-password")
 
