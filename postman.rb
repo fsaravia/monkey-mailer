@@ -42,10 +42,6 @@ module Postman
       sleep 5
     end
   end
-
-  def self.usage
-    puts fallen_usage
-  end
 end
 
 case Clap.run(ARGV, Postman.cli).first
@@ -55,6 +51,6 @@ when "start"
 when "stop"
   Postman.stop!
 else
-  Postman.usage
+  Postman.fallen_usage
 end
 
