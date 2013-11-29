@@ -25,34 +25,19 @@ module Postman
       mails = []
 
       #Urgent mails
-      urgent_quota = Postman.settings['urgent_quota']
-      Postman.database.each_key do |database|
-        urgent_mails = DataMapper.repository(database.to_sym) {MailUrgent.all(:limit => urgent_quota)}
-        urgent_quota -= urgent_mails.size
-        mails.concat urgent_mails
-      end
+      mails.concat Postman.find_mails(MailUrgent, Postman.settings['urgent_quota'])
 
       @@normal_sleep += 1
       @@low_sleep += 1
 
       if(@@normal_sleep == 12)
-        normal_quota = Postman.settings['normal_quota']
-        Postman.database.each_key do |database|
-          normal_mails = DataMapper.repository(database.to_sym) {MailNormal.all(:limit => normal_quota)}
-          normal_quota -= normal_mails.size
-          mails.concat normal_mails
-          @@normal_sleep = 0
-        end
+        mails.concat Postman.find_mails(MailNormal, Postman.settings['normal_quota'])
+        @@normal_sleep = 0
       end
 
       if(@@low_sleep == 54)
-        low_quota = Postman.settings['low_quota']
-        Postman.database.each_key do |database|
-          low_mails = DataMapper.repository(database.to_sym) {MailLow.all(:limit => low_quota)}
-          low_quota -= low_mails.size
-          mails.concat low_mails
-          @@normal_sleep = 0
-        end
+        mails.concat Postman.find_mails(MailLow, Postman.settings['low_quota'])
+        @@low_sleep = 0
       end
 
       send_mails(mails)
