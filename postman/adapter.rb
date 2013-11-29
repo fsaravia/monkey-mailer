@@ -24,18 +24,18 @@ module Postman
     end
   end
 
-  case Postman.settings['adapter']
+  case Postman.configuration.adapter
   when 'mandrilapi'
     require_relative '../postman/adapters/mandrilapi'
-    adapter = Postman::MandrilAPI.new(Postman.settings['mandril_api_key'])
+    adapter = Postman::MandrilAPI.new(Postman.configuration.mandril_api_key)
   when 'smtp'
     require_relative '../postman/adapters/smtp'
-    adapter = Postman::Smtp.new(Postman.settings['smtp'])
+    adapter = Postman::Smtp.new(Postman.configuration.smtr)
   when 'dummy'
     require_relative '../postman/adapters/dummy'
     adapter = Postman::Dummy.new
   else
-    raise "Adapter #{Postman.settings['adapter']} does not exist"
+    raise "Adapter #{Postman.configuration.adapter} does not exist"
   end
 
   Postman.set_adapter(adapter)

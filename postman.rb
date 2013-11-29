@@ -17,29 +17,31 @@ module Postman
   @@normal_sleep = 0
   @@low_sleep = 0
 
+  Configuration.new
+
   def self.run
     while running?
 
       mails = []
 
       #Urgent mails
-      mails.concat Postman.find_mails(MailUrgent, Postman.settings['urgent_quota'])
+      mails.concat Postman.find_mails(MailUrgent, Postman.configuration.urgent_quota)
 
       @@normal_sleep += 1
       @@low_sleep += 1
 
-      if(@@normal_sleep == Postman.settings['normal_sleep'])
-        mails.concat Postman.find_mails(MailNormal, Postman.settings['normal_quota'])
+      if(@@normal_sleep == Postman.configuration.normal_sleep)
+        mails.concat Postman.find_mails(MailNormal, Postman.configuration.normal_quota)
         @@normal_sleep = 0
       end
 
-      if(@@low_sleep == Postman.settings['low_sleep'])
-        mails.concat Postman.find_mails(MailLow, Postman.settings['low_quota'])
+      if(@@low_sleep == Postman.configuration.low_sleep)
+        mails.concat Postman.find_mails(MailLow, Postman.configuration.low_quota)
         @@low_sleep = 0
       end
 
       Postman.send_mails(mails)
-      sleep Postman.settings['sleep']
+      sleep Postman.configuration.sleep
     end
   end
 end
