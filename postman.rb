@@ -28,18 +28,18 @@ module Postman
       @@normal_sleep += 1
       @@low_sleep += 1
 
-      if(@@normal_sleep == 12)
+      if(@@normal_sleep == Postman.settings['normal_sleep'])
         mails.concat Postman.find_mails(MailNormal, Postman.settings['normal_quota'])
         @@normal_sleep = 0
       end
 
-      if(@@low_sleep == 54)
+      if(@@low_sleep == Postman.settings['low_sleep'])
         mails.concat Postman.find_mails(MailLow, Postman.settings['low_quota'])
         @@low_sleep = 0
       end
 
       Postman.send_mails(mails)
-      sleep 5
+      sleep Postman.settings['sleep']
     end
   end
 end
