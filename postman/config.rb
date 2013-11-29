@@ -1,7 +1,7 @@
 module Postman
 
   def self.database
-    @@config ||= YAML.load_file(File.dirname(__FILE__) + '/../config/database.yaml')
+    @@database ||= YAML.load_file(File.dirname(__FILE__) + '/../config/database.yaml')
   end
 
   def self.settings
