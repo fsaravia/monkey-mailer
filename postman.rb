@@ -22,26 +22,41 @@ module Postman
   def self.run
     while running?
 
-      urgent = MailUrgent.all(:limit => URGENT_QUOTA)
-      send_mails(urgent)
+      mails = []
+
+      #Urgent mails
+      urgent_quota = Postman.settings['urgent_quota']
+      Postman.database.each_key do |database|
+        urgent_mails = DataMapper.repository(database.to_sym) {MailUrgent.all(:limit => urgent_quota)}
+        urgent_quota -= urgent_mails.size
+        mails.concat urgent_mails
+      end
 
       @@normal_sleep += 1
       @@low_sleep += 1
 
       if(@@normal_sleep == 12)
-        normal = MailNormal.all(:limit => NORMAL_QUOTA)
-        send_mails(normal)
-        @@normal_sleep = 0
+        normal_quota = Postman.settings['normal_quota']
+        Postman.database.each_key do |database|
+          normal_mails = DataMapper.repository(database.to_sym) {MailNormal.all(:limit => normal_quota)}
+          normal_quota -= normal_mails.size
+          mails.concat normal_mails
+          @@normal_sleep = 0
+        end
       end
 
       if(@@low_sleep == 54)
-        low = MailLow.all(:limit => LOW_QUOTA)
-        send_mails(low)
-        @@low_sleep = 0
+        low_quota = Postman.settings['low_quota']
+        Postman.database.each_key do |database|
+          low_mails = DataMapper.repository(database.to_sym) {MailLow.all(:limit => low_quota)}
+          low_quota -= low_mails.size
+          mails.concat low_mails
+          @@normal_sleep = 0
+        end
       end
 
+      send_mails(mails)
       sleep 5
-
     end
   end
 
