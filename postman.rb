@@ -4,9 +4,6 @@ require 'data_mapper'
 
 require_relative 'postman/config'
 require_relative 'postman/database'
-require_relative 'postman/adapters/smtp'
-require_relative 'postman/adapters/mandrilapi'
-require_relative 'postman/adapters/dummy'
 
 module Postman
   extend Fallen
@@ -76,10 +73,13 @@ end
 
 case Postman.settings['adapter']
 when 'mandrilapi'
+  require_relative 'postman/adapters/mandrilapi'
   adapter = Postman::MandrilAPI.new(Postman.settings['mandril_api_key'])
 when 'smtp'
+  require_relative 'postman/adapters/smtp'
   adapter = Postman::Smtp.new(Postman.settings['smtp'])
 when 'dummy'
+  require_relative 'postman/adapters/dummy'
   adapter = Postman::Dummy.new
 else
   raise "Adapter #{Postman.settings['adapter']} does not exist"
