@@ -1,3 +1,4 @@
+require 'bundler/setup'
 require 'fallen'
 require 'fallen/cli'
 require 'dm-core'
