@@ -1,0 +1,14 @@
+root = ::File.dirname(__FILE__)
+require ::File.join(root, 'postman')
+
+namespace :db do
+  task :setup do
+    models = DataMapper::Model.descendants
+    Postman.configuration.databases.each_key do |database|
+      models.each do |model|
+        model.auto_migrate!(database.to_sym)
+      end
+      puts "Database #{database} has been setup"
+    end
+  end
+end
