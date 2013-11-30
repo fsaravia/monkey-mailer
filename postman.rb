@@ -4,7 +4,6 @@ require 'fallen/cli'
 require 'dm-core'
 
 require_relative 'postman/config'
-require_relative 'postman/database'
 require_relative 'postman/adapter'
 
 module Postman
@@ -48,6 +47,7 @@ end
 case Clap.run(ARGV, Postman.cli).first
 
 when "start"
+  require_relative 'postman/database'
   Postman.start!
 when "stop"
   Postman.stop!
