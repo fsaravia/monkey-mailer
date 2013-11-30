@@ -3,17 +3,12 @@ class MailQueue
 
   property :id, Serial
   property :priority, Discriminator
-  property :to, String
-  property :from, String
-  property :subject, String
+  property :to_email, String, :length => 255, :required => true
+  property :to_name, String, :length => 255
+  property :from_email, String, :length => 255, :required => true
+  property :from_name, String, :length => 255
+  property :subject, String, :length => 255
   property :body, Text
-  
-  def initialize(email)
-    self.to = email.to
-    self.from = email.from
-    self.subject = email.subject
-    self.body = email.body
-  end
 end
 
 class MailUrgent < MailQueue

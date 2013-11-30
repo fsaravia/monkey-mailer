@@ -2,7 +2,7 @@ require 'mail'
 
 module Postman
   class Smtp
-    
+
     def initialize(options)
       Mail.defaults do
         delivery_method :smtp, options
@@ -11,10 +11,18 @@ module Postman
 
     def send_mail(email)
       Mail.deliver do
-        to email.to
-        from email.from
+        to "#{email.to_name} <#{email.to_email}>"
+        from "#{email.from_name} <#{email.from_email}>"
         subject email.subject
-        body email.body
+
+        html_part do
+          content_type 'text/html; charset=UTF-8'
+          body email.body
+        end
+
+        text_part do
+          body email.body.gsub(/<\/?[^>]*>/, "")
+        end
       end
     end
   end

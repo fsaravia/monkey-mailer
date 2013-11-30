@@ -3,7 +3,7 @@ require "uri"
 require "json"
 
 module Postman
-  class MandrilAPI 
+  class MandrilAPI
     @key = ''
     @request = {}
     @uri = ''
@@ -36,12 +36,12 @@ module Postman
           :bcc_address => '',
         },
         :async => true
-      }.to_hash
+      }
 
       @request[:key] = @key
-      @request[:message][:to] << { :email => email.to, :name => ''}
-      @request[:message][:from_name] = email.from
-      @request[:message][:from_email] = 'info@plupin.com'
+      @request[:message][:to] << { :email => email.to_email, :name => email.to_name}
+      @request[:message][:from_name] = email.from_name
+      @request[:message][:from_email] = email.from_email
       @request[:message][:html] = email.body
       @request[:message][:text] = email.body.gsub(/<\/?[^>]*>/, "")
       @request[:message][:subject] = email.subject
