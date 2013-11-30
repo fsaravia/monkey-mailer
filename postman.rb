@@ -50,7 +50,7 @@ when "start"
   Postman.start!
 when "stop"
   Postman.stop!
-else
+when "usage", "help"
   puts Postman.fallen_usage
 end
 
