@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 gem "clap"
 gem "fallen"
-gem 'data_mapper'
+gem 'dm-core'
 gem 'dm-mysql-adapter'
 gem 'mail'

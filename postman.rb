@@ -1,6 +1,6 @@
 require 'fallen'
 require 'fallen/cli'
-require 'data_mapper'
+require 'dm-core'
 
 require_relative 'postman/config'
 require_relative 'postman/database'
