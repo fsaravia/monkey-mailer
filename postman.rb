@@ -17,8 +17,6 @@ module Postman
   @@normal_sleep = 0
   @@low_sleep = 0
 
-  Configuration.new
-
   def self.run
     while running?
 
