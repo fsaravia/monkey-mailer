@@ -1,9 +1,5 @@
 module Postman
 
-  def self.database
-    @@database ||= YAML.load_file(File.dirname(__FILE__) + '/../config/database.yaml')
-  end
-
   def self.configuration
     @@configuration ||= Configuration.new
   end
@@ -12,11 +8,15 @@ module Postman
     yield configuration
   end
 
+  def self.database
+    configuration.databases
+  end
+
   class Configuration
 
     attr_accessor :adapter, :mandril_api_key, :smtp_address, :smtp_port, :smtp_domain,
     :smtp_user_name, :smtp_password, :smtp_authentication, :smtp_enable_starttls_auto,
-    :urgent_quota, :normal_quota, :low_quota, :normal_sleep, :low_sleep, :sleep
+    :urgent_quota, :normal_quota, :low_quota, :normal_sleep, :low_sleep, :sleep, :databases
 
     @@defaults = {
       :adapter => 'mandrilapi',
@@ -37,6 +37,7 @@ module Postman
       :normal_sleep => 12,
       :low_sleep => 54,
       :sleep => 5,
+      :databases => {}
     }
 
     @@config_file = "#{File.dirname(__FILE__)}/../config/settings.yaml"
@@ -44,11 +45,15 @@ module Postman
     def initialize
       user_settings = File.exists?(@@config_file) ? YAML.load_file(@@config_file) : {}
       @@defaults.each_pair do |key, value|
-        value = user_settings[key.to_s] if user_settings.include?(key.to_s)
-        if value.is_a?(Hash)
-          value.each_pair {|sub_key, sub_value| self.send("#{key}_#{sub_key}=".to_sym, sub_value)}
+        if key === :databases
+          @databases = user_settings['databases']
         else
-          self.send("#{key}=".to_sym,value)
+          value = user_settings[key.to_s] if user_settings.include?(key.to_s)
+          if value.is_a?(Hash)
+            value.each_pair {|sub_key, sub_value| self.send("#{key}_#{sub_key}=".to_sym, sub_value)}
+          else
+            self.send("#{key}=".to_sym,value)
+          end
         end
       end
     end
