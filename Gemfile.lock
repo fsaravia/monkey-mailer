@@ -5,6 +5,8 @@ GEM
     clap (1.0.0)
     data_objects (0.10.10)
       addressable (~> 2.1)
+    database_cleaner (1.2.0)
+    diff-lcs (1.1.3)
     dm-core (1.2.0)
       addressable (~> 2.2.6)
     dm-do-adapter (1.2.0)
@@ -15,6 +17,8 @@ GEM
     dm-mysql-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
       do_mysql (~> 0.10.6)
+    dm-transactions (1.2.0)
+      dm-core (~> 1.2.0)
     do_mysql (0.10.10)
       data_objects (= 0.10.10)
     fallen (0.0.2)
@@ -25,6 +29,14 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     polyglot (0.3.3)
+    rspec (2.12.0)
+      rspec-core (~> 2.12.0)
+      rspec-expectations (~> 2.12.0)
+      rspec-mocks (~> 2.12.0)
+    rspec-core (2.12.2)
+    rspec-expectations (2.12.1)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.12.2)
     treetop (1.4.11)
       polyglot
       polyglot (>= 0.3.1)
@@ -34,8 +46,11 @@ PLATFORMS
 
 DEPENDENCIES
   clap
+  database_cleaner
   dm-core
   dm-migrations
   dm-mysql-adapter
+  dm-transactions
   fallen
   mail
+  rspec

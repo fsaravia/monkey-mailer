@@ -1,0 +1,33 @@
+root = ::File.dirname(__FILE__)
+require ::File.join(root,'..', 'postman')
+
+require 'dm-transactions'
+require 'database_cleaner'
+
+Postman.configure do |config|
+  config.databases = {
+    'default' => {
+      :adapter => 'mysql',
+      :user => 'root',
+      :password => 'sapito',
+      :database => 'postman_test'
+    }
+  }
+end
+require_relative '../postman/database'
+
+RSpec.configure do |config|
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+end
