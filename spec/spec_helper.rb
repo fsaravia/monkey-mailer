@@ -14,8 +14,7 @@ Postman.configure do |config|
   }
 end
 require_relative '../postman/database'
-require_relative 'support/test_adapter'
-require_relative 'support/spawners'
+Dir[::File.join(root, "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
 
