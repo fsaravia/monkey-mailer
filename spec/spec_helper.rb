@@ -14,6 +14,7 @@ Postman.configure do |config|
   }
 end
 require_relative '../postman/database'
+require_relative 'support/test_adapter'
 require_relative 'support/spawners'
 
 RSpec.configure do |config|
