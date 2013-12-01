@@ -23,17 +23,18 @@ module Postman
     #Urgent mails
     mails.concat Postman.find_mails(MailUrgent, Postman.configuration.urgent_quota)
 
-    @@normal_sleep += 1
-    @@low_sleep += 1
-
     if(@@normal_sleep == Postman.configuration.normal_sleep)
       mails.concat Postman.find_mails(MailNormal, Postman.configuration.normal_quota)
       @@normal_sleep = 0
+    else
+      @@normal_sleep += 1
     end
 
     if(@@low_sleep == Postman.configuration.low_sleep)
       mails.concat Postman.find_mails(MailLow, Postman.configuration.low_quota)
       @@low_sleep = 0
+    else
+      @@low_sleep += 1
     end
 
     Postman.send_mails(mails)
