@@ -1,7 +1,7 @@
 require 'bundler/setup'
 require 'fallen'
 require 'fallen/cli'
-require 'dm-core'
+require 'data_mapper'
 
 require_relative 'postman/config'
 require_relative 'postman/adapter'

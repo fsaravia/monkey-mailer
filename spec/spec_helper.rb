@@ -1,7 +1,6 @@
 root = ::File.dirname(__FILE__)
 require ::File.join(root,'..', 'postman')
 
-require 'dm-transactions'
 require 'database_cleaner'
 
 Postman.configure do |config|
@@ -15,6 +14,7 @@ Postman.configure do |config|
   }
 end
 require_relative '../postman/database'
+require_relative 'support/spawners'
 
 RSpec.configure do |config|
 
