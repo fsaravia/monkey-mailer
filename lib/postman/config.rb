@@ -40,7 +40,7 @@ module Postman
       :databases => {}
     }
 
-    @@config_file = "#{File.dirname(__FILE__)}/../config/settings.yaml"
+    @@config_file = "#{File.dirname(__FILE__)}/../../config/settings.yaml"
 
     def initialize
       user_settings = File.exists?(@@config_file) ? YAML.load_file(@@config_file) : {}

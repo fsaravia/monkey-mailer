@@ -1,5 +1,5 @@
 root = ::File.dirname(__FILE__)
-require ::File.join(root,'..', 'postman')
+require ::File.join(root,'..', 'lib', 'postman')
 
 require 'database_cleaner'
 
@@ -13,7 +13,7 @@ Postman.configure do |config|
     }
   }
 end
-require_relative '../postman/database'
+require_relative '../lib/postman/database'
 Dir[::File.join(root, "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
