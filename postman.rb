@@ -84,7 +84,7 @@ smtp = Postman::Smtp.new({
   :enable_starttls_auto => true
 });
 
-mandrilapi = MandrilAPI.new("example-password")
+mandrilapi = Postman::MandrilAPI.new("example-password")
 
 Postman.set_adapter(mandrilapi)
 
