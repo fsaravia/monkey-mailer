@@ -3,6 +3,7 @@ require ::File.join(root, 'postman')
 
 namespace :db do
   task :setup do
+    require_relative 'postman/database'
     models = DataMapper::Model.descendants
     Postman.configuration.databases.each_key do |database|
       models.each do |model|
