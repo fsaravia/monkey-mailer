@@ -3,7 +3,7 @@ require ::File.join(root, 'lib', 'postman')
 
 namespace :db do
   task :setup do
-    require_relative 'lib/postman/database'
+    require_relative 'lib/postman/loader'
     models = DataMapper::Model.descendants
     Postman.configuration.databases.each_key do |database|
       models.each do |model|

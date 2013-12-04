@@ -13,7 +13,7 @@ Postman.configure do |config|
     }
   }
 end
-require_relative '../lib/postman/database'
+require_relative '../lib/postman/loader'
 Dir[::File.join(root, "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|

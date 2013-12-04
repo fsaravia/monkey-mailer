@@ -51,7 +51,7 @@ end
 case Clap.run(ARGV, Postman.cli).first
 
 when "start"
-  require_relative 'postman/database'
+  require_relative 'postman/loader'
   Postman.start!
 when "stop"
   Postman.stop!

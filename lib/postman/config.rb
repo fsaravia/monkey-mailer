@@ -16,7 +16,8 @@ module Postman
 
     attr_accessor :adapter, :mandril_api_key, :smtp_address, :smtp_port, :smtp_domain,
     :smtp_user_name, :smtp_password, :smtp_authentication, :smtp_enable_starttls_auto,
-    :urgent_quota, :normal_quota, :low_quota, :normal_sleep, :low_sleep, :sleep, :databases
+    :urgent_quota, :normal_quota, :low_quota, :normal_sleep, :low_sleep, :sleep, :databases,
+    :loader
 
     @@defaults = {
       :adapter => 'mandrilapi',
@@ -37,6 +38,7 @@ module Postman
       :normal_sleep => 12,
       :low_sleep => 54,
       :sleep => 5,
+      :loader => 'database',
       :databases => {}
     }
 
