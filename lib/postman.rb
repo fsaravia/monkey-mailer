@@ -5,6 +5,7 @@ require 'data_mapper'
 
 require_relative 'postman/config'
 require_relative 'postman/adapter'
+require_relative 'postman/loader'
 
 module Postman
   extend Fallen
@@ -21,17 +22,17 @@ module Postman
     mails = []
 
     #Urgent mails
-    mails.concat Postman.find_mails(MailUrgent, Postman.configuration.urgent_quota)
+    mails.concat Postman.find_mails(:urgent, Postman.configuration.urgent_quota)
 
     if(@@normal_sleep == Postman.configuration.normal_sleep)
-      mails.concat Postman.find_mails(MailNormal, Postman.configuration.normal_quota)
+      mails.concat Postman.find_mails(:normal, Postman.configuration.normal_quota)
       @@normal_sleep = 0
     else
       @@normal_sleep += 1
     end
 
     if(@@low_sleep == Postman.configuration.low_sleep)
-      mails.concat Postman.find_mails(MailLow, Postman.configuration.low_quota)
+      mails.concat Postman.find_mails(:low, Postman.configuration.low_quota)
       @@low_sleep = 0
     else
       @@low_sleep += 1
@@ -51,7 +52,6 @@ end
 case Clap.run(ARGV, Postman.cli).first
 
 when "start"
-  require_relative 'postman/loader'
   Postman.start!
 when "stop"
   Postman.stop!

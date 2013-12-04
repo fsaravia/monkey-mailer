@@ -1,7 +1,7 @@
 module Postman
 
-  def self.set_adapter(adapter)
-    @@adapter = adapter
+  def self.adapter
+    @@adapter ||= register_adapter
   end
 
   def self.deliver(email)
@@ -24,19 +24,19 @@ module Postman
     end
   end
 
-  case Postman.configuration.adapter
-  when 'mandrilapi'
-    require_relative 'adapters/mandrilapi'
-    adapter = Postman::MandrilAPI.new(Postman.configuration.mandril_api_key)
-  when 'smtp'
-    require_relative 'adapters/smtp'
-    adapter = Postman::Smtp.new(Postman.configuration.smtr)
-  when 'dummy'
-    require_relative 'adapters/dummy'
-    adapter = Postman::Dummy.new
-  else
-    raise "Adapter #{Postman.configuration.adapter} does not exist"
+  def self.register_adapter
+    case Postman.configuration.adapter
+    when 'mandrilapi'
+      require_relative 'adapters/mandrilapi'
+      @@adapter = Postman::MandrilAPI.new(Postman.configuration.mandril_api_key)
+    when 'smtp'
+      require_relative 'adapters/smtp'
+      @@adapter = Postman::Smtp.new(Postman.configuration.smtr)
+    when 'dummy'
+      require_relative 'adapters/dummy'
+      @@adapter = Postman::Dummy.new
+    else
+      raise "Adapter #{Postman.configuration.adapter} does not exist"
+    end
   end
-
-  Postman.set_adapter(adapter)
 end

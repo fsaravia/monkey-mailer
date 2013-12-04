@@ -13,7 +13,6 @@ Postman.configure do |config|
     }
   }
 end
-require_relative '../lib/postman/loader'
 Dir[::File.join(root, "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
@@ -21,6 +20,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
+    Postman.loader
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end

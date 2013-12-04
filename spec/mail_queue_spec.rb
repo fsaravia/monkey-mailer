@@ -13,21 +13,18 @@ describe MailQueue do
     }
   end
 
-  it 'should create some urgent priority emails' do
-    MailQueue.create(@mail_hash.merge(:priority => MailUrgent)).should be_true
-    MailUrgent.create(@mail_hash).should be_true
-    MailUrgent.count.should eq 2
+  it 'should create urgent priority emails' do
+    MailQueue.create(@mail_hash.merge(:priority => :urgent)).should be_true
+    MailQueue.count(:priority => :urgent).should eq 1
   end
 
-  it 'should create some normal priority emails' do
-    MailQueue.create(@mail_hash.merge(:priority => MailNormal)).should be_true
-    MailNormal.create(@mail_hash).should be_true
-    MailNormal.count.should eq 2
+  it 'should create normal priority emails' do
+    MailQueue.create(@mail_hash.merge(:priority => :normal)).should be_true
+    MailQueue.count(:priority => :normal).should eq 1
   end
 
-  it 'should create some low priority emails' do
-    MailQueue.create(@mail_hash.merge(:priority => MailLow)).should be_true
-    MailLow.create(@mail_hash).should be_true
-    MailLow.count.should eq 2
+  it 'should create low priority emails' do
+    MailQueue.create(@mail_hash.merge(:priority => :low)).should be_true
+    MailQueue.count(:priority => :low).should eq 1
   end
 end
