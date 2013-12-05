@@ -11,10 +11,6 @@ module Postman
   extend Fallen
   extend Fallen::CLI
 
-  URGENT_QUOTA = 100
-  NORMAL_QUOTA = 100
-  LOW_QUOTA = 100
-
   @@normal_sleep = 0
   @@low_sleep = 0
 
