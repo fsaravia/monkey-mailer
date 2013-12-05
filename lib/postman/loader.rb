@@ -4,6 +4,10 @@ module Postman
     @@loader ||= register_loader
   end
 
+  def self.reset_loader
+    @@loader = nil
+  end
+
   def self.find_mails(priority, quota)
     loader.find_mails(priority, quota)
   end
