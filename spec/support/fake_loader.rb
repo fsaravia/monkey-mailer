@@ -1,0 +1,2 @@
+class FakeLoader
+end
