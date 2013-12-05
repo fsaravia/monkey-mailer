@@ -16,7 +16,7 @@ module Postman
     mails.each do |mail|
       begin
         deliver(mail)
-        mail.destroy
+        delete(mail)
       rescue DeliverError => e
         puts e.message
         puts e.backtrace

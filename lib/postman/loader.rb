@@ -8,7 +8,7 @@ module Postman
     loader.find_mails(priority, quota)
   end
 
-  def self.delete(mail)
+  def self.delete(email)
     loader.delete(email)
   end
 
