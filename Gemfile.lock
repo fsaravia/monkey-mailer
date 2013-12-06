@@ -88,9 +88,7 @@ DEPENDENCIES
   clap
   data_mapper
   database_cleaner
-  dm-core
   dm-mysql-adapter
-  dm-transactions
   fallen
   mail
   rspec
