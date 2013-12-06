@@ -63,6 +63,4 @@ module Postman
       end
     end
   end
-
-  class DeliverError < StandardError; end
 end

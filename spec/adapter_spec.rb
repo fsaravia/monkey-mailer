@@ -18,7 +18,7 @@ describe Postman do
       Postman.stub(:adapter, {})
       Postman.adapter.should be_nil
       Postman.unstub(:adapter)
-      Postman.adapter.respond_to?(:send_mail).should be_true
+      Postman.adapter.respond_to?(:send_email).should be_true
     end
 
     it 'should not register the adapter if one has been already registered' do

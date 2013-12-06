@@ -25,14 +25,14 @@ module Postman
       DataMapper.finalize
     end
 
-    def find_mails(priority, quota)
-      mails = []
-      Postman.database.each_key do |database|
-        new_mails = DataMapper.repository(database.to_sym) {MailQueue.all(:priority => priority, :limit => quota)}
-        quota -= new_mails.size
-        mails.concat(new_mails)
+    def find_emails(priority, quota)
+      emails = []
+      Postman.configuration.databases.each_key do |database|
+        new_emails = DataMapper.repository(database.to_sym) {MailQueue.all(:priority => priority, :limit => quota)}
+        quota -= new_emails.size
+        emails.concat(new_emails)
       end
-      mails
+      emails
     end
 
     def delete(email)

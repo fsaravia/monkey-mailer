@@ -7,7 +7,7 @@ module Postman
       @sent_emails = []
     end
 
-    def send_mail(email)
+    def send_email(email)
       @sent_emails << email
     end
   end

@@ -16,7 +16,7 @@ module Postman
       @uri = URI.parse(URI.encode(ENDPOINT))
     end
 
-    def send_mail(email)
+    def send_email(email)
 
       @request = {
         :key => '',
@@ -52,7 +52,7 @@ module Postman
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.use_ssl = true
       response = http.start {|http| http.request(req)}
-      raise DeliverError.new("Mandrill response.code not equal to 200") unless response.code.to_i == 200
+      raise DeliverError.new("Mandril response.code not equal to 200") unless response.code.to_i == 200
       puts "Response #{response.code} #{response.message}: #{response.body}"
     end
   end

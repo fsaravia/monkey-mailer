@@ -9,18 +9,14 @@ module Postman
   end
 
   def self.deliver(email)
-    if !@@adapter.nil?
-      @@adapter.send_mail(email)
-    else
-      raise 'Adapter has not been configured'
-    end
+    adapter.send_email(email)
   end
 
-  def self.send_mails(mails)
-    mails.each do |mail|
+  def self.send_emails(emails)
+    emails.each do |email|
       begin
-        deliver(mail)
-        delete(mail)
+        deliver(email)
+        delete(email)
       rescue DeliverError => e
         puts e.message
         puts e.backtrace

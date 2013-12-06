@@ -8,8 +8,8 @@ module Postman
     @@loader = nil
   end
 
-  def self.find_mails(priority, quota)
-    loader.find_mails(priority, quota)
+  def self.find_emails(priority, quota)
+    loader.find_emails(priority, quota)
   end
 
   def self.delete(email)
@@ -26,4 +26,6 @@ module Postman
       raise "Loader #{Postman.configuration.loader} does not exist"
     end
   end
+
+  class DeliverError < StandardError; end
 end

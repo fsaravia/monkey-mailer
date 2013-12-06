@@ -1,13 +1,11 @@
-root = ::File.dirname(__FILE__)
-require ::File.join(root, 'lib', 'postman')
+require File.join(File.dirname(__FILE__), 'lib', 'postman')
 
 namespace :db do
   task :setup do
     require_relative 'lib/postman/loaders/database'
-    Postman.loader
-    models = DataMapper::Model.descendants
+    raise "Postman loader is not database" unless Postman.loader.is_a?(Postman::Database)
     Postman.configuration.databases.each_key do |database|
-      models.each do |model|
+      DataMapper::Model.descendants.each do |model|
         model.auto_migrate!(database.to_sym)
       end
       puts "Database #{database} has been setup"

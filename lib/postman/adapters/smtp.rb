@@ -9,7 +9,7 @@ module Postman
       end
     end
 
-    def send_mail(email)
+    def send_email(email)
       Mail.deliver do
         to "#{email.to_name} <#{email.to_email}>"
         from "#{email.from_name} <#{email.from_email}>"

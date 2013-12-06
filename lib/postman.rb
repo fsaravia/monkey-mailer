@@ -15,26 +15,26 @@ module Postman
   @@low_sleep = 0
 
   def self.find_and_deliver
-    mails = []
+    emails = []
 
-    #Urgent mails
-    mails.concat Postman.find_mails(:urgent, Postman.configuration.urgent_quota)
+    #Urgent emails
+    emails.concat Postman.find_emails(:urgent, Postman.configuration.urgent_quota)
 
     if(@@normal_sleep == Postman.configuration.normal_sleep)
-      mails.concat Postman.find_mails(:normal, Postman.configuration.normal_quota)
+      emails.concat Postman.find_emails(:normal, Postman.configuration.normal_quota)
       @@normal_sleep = 0
     else
       @@normal_sleep += 1
     end
 
     if(@@low_sleep == Postman.configuration.low_sleep)
-      mails.concat Postman.find_mails(:low, Postman.configuration.low_quota)
+      emails.concat Postman.find_emails(:low, Postman.configuration.low_quota)
       @@low_sleep = 0
     else
       @@low_sleep += 1
     end
 
-    Postman.send_mails(mails)
+    Postman.send_emails(emails)
   end
 
   def self.run
