@@ -36,7 +36,7 @@ module Postman
       @@adapter = Postman::MandrilAPI.new(Postman.configuration.mandril_api_key)
     when 'smtp'
       require_relative 'adapters/smtp'
-      @@adapter = Postman::Smtp.new(Postman.configuration.smtr)
+      @@adapter = Postman::Smtp.new(Postman.configuration.smtp)
     when 'dummy'
       require_relative 'adapters/dummy'
       @@adapter = Postman::Dummy.new

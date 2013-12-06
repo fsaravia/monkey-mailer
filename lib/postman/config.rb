@@ -8,10 +8,6 @@ module Postman
     yield configuration
   end
 
-  def self.database
-    configuration.databases
-  end
-
   class Configuration
 
     attr_accessor :adapter, :mandril_api_key, :smtp_address, :smtp_port, :smtp_domain,
@@ -57,6 +53,13 @@ module Postman
             self.send("#{key}=".to_sym,value)
           end
         end
+      end
+    end
+
+    def smtp
+      options = {}
+      @@defaults[:smtp].each_key do |property|
+        options["smtp_#{property}".to_sym] = self.send("smtp_#{property}".to_sym)
       end
     end
   end
