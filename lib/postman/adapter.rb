@@ -4,6 +4,10 @@ module Postman
     @@adapter ||= register_adapter
   end
 
+  def self.reset_adapter
+    @@adapter = nil
+  end
+
   def self.deliver(email)
     if !@@adapter.nil?
       @@adapter.send_mail(email)
@@ -24,6 +28,7 @@ module Postman
     end
   end
 
+  private
   def self.register_adapter
     case Postman.configuration.adapter
     when 'mandrilapi'
