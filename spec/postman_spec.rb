@@ -112,4 +112,14 @@ describe Postman do
     MailQueue.count(:priority => :low).should eq 11
     MailQueue.count.should eq 38
   end
+
+  it 'should not delete the email if delivery failed' do
+    Postman.reset_adapter
+    Postman.class_variable_set(:@@adapter, Postman::AngryAdapter.new)
+    MailQueue.spawn(:priority => :urgent)
+    previous_stdout, $stdout = $stdout, StringIO.new #Redirect stdout to avoid seeing backtrace on console
+    Postman.find_and_deliver
+    $stdout = previous_stdout
+    MailQueue.count.should eq 1
+  end
 end
