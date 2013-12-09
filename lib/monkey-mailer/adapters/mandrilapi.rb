@@ -2,7 +2,7 @@ require "net/http"
 require "uri"
 require "json"
 
-module Postman
+module MonkeyMailer
   class MandrilAPI
     @key = ''
     @request = {}

@@ -1,15 +1,15 @@
 root = ::File.dirname(__FILE__)
-require ::File.join(root,'..', 'lib', 'postman')
+require ::File.join(root,'..', 'lib', 'monkey-mailer')
 
 require 'database_cleaner'
 
-Postman.configure do |config|
+MonkeyMailer.configure do |config|
   config.databases = {
     'default' => {
       :adapter => 'mysql',
-      :user => 'root',
-      :password => 'sapito',
-      :database => 'postman_test'
+      :user => 'monkey-mailer',
+      :password => 'monkey_mailer_dev',
+      :database => 'monkey_mailer_test'
     }
   }
 end
@@ -20,9 +20,9 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
-    Postman.loader
+    MonkeyMailer.loader
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
+    DataMapper.auto_upgrade!
   end
 
   config.before(:each) do

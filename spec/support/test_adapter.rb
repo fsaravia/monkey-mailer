@@ -1,4 +1,4 @@
-module Postman
+module MonkeyMailer
   class TestAdapter
 
     attr_accessor :sent_emails

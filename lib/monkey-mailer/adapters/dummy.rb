@@ -1,4 +1,4 @@
-module Postman
+module MonkeyMailer
   class Dummy
 
     def send_email(email)

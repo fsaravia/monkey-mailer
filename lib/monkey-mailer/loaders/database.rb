@@ -11,7 +11,7 @@ class MailQueue
   property :body, Text
 end
 
-module Postman
+module MonkeyMailer
   class Database
 
     def initialize(sources)
@@ -27,7 +27,7 @@ module Postman
 
     def find_emails(priority, quota)
       emails = []
-      Postman.configuration.databases.each_key do |database|
+      MonkeyMailer.configuration.databases.each_key do |database|
         new_emails = DataMapper.repository(database.to_sym) {MailQueue.all(:priority => priority, :limit => quota)}
         quota -= new_emails.size
         emails.concat(new_emails)

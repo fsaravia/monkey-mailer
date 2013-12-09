@@ -1,4 +1,4 @@
-module Postman
+module MonkeyMailer
 
   def self.loader
     @@loader ||= register_loader
@@ -18,12 +18,12 @@ module Postman
 
   private
   def self.register_loader
-    case Postman.configuration.loader
+    case MonkeyMailer.configuration.loader
     when 'database'
       require_relative 'loaders/database'
-      @@loader = Postman::Database.new(Postman.configuration.databases)
+      @@loader = MonkeyMailer::Database.new(MonkeyMailer.configuration.databases)
     else
-      raise "Loader #{Postman.configuration.loader} does not exist"
+      raise "Loader #{MonkeyMailer.configuration.loader} does not exist"
     end
   end
 

@@ -1,4 +1,4 @@
-module Postman
+module MonkeyMailer
 
   def self.configuration
     @@configuration ||= Configuration.new

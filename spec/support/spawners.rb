@@ -1,4 +1,4 @@
-require_relative '../../lib/postman/loaders/database'
+require_relative '../../lib/monkey-mailer/loaders/database'
 require 'spawn'
 
 MailQueue.extend(Spawn).spawner do |mail_queue|

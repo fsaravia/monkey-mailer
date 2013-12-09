@@ -1,6 +1,6 @@
 require 'mail'
 
-module Postman
+module MonkeyMailer
   class Smtp
 
     def initialize(options)
