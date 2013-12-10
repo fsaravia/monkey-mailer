@@ -5,7 +5,7 @@ module MonkeyMailer
 
     def initialize(options)
       Mail.defaults do
-        delivery_method :smtp, options
+        delivery_method :smtp, options.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
       end
     end
 
