@@ -1,3 +1,5 @@
+require_relative 'loaders/dummy'
+
 module MonkeyMailer
 
   def self.loader
@@ -12,19 +14,21 @@ module MonkeyMailer
     loader.find_emails(priority, quota)
   end
 
-  def self.delete(email)
-    loader.delete(email)
+  def self.delete_email(email)
+    loader.delete_email(email)
   end
 
   private
   def self.register_loader
-    case MonkeyMailer.configuration.loader
-    when 'database'
-      require_relative 'loaders/database'
-      @@loader = MonkeyMailer::Database.new(MonkeyMailer.configuration.databases)
-    else
-      raise "Loader #{MonkeyMailer.configuration.loader} does not exist"
+    begin
+      @@loader = MonkeyMailer::Loaders.const_get(camelize(MonkeyMailer.configuration.loader)).new(MonkeyMailer.configuration.send("#{MonkeyMailer.configuration.loader}_options"))
+    rescue NameError
+      raise LoadError, "Could not find a loader for #{MonkeyMailer.configuration.loader.inspect}. You may need to install additional gems such as mm-#{MonkeyMailer.configuration.loader}"
     end
+  end
+
+  def self.camelize(word)
+    word.gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
   end
 
   class DeliverError < StandardError; end

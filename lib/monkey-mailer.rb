@@ -1,8 +1,9 @@
 require 'bundler/setup'
 require 'fallen'
 require 'fallen/cli'
-require 'data_mapper'
+require 'yaml'
 
+require_relative 'monkey-mailer/email'
 require_relative 'monkey-mailer/config'
 require_relative 'monkey-mailer/adapter'
 require_relative 'monkey-mailer/loader'

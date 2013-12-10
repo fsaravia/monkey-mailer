@@ -16,7 +16,7 @@ module MonkeyMailer
     emails.each do |email|
       begin
         deliver(email)
-        delete(email)
+        delete_email(email)
       rescue DeliverError => e
         puts e.message
         puts e.backtrace
