@@ -37,14 +37,8 @@ module MonkeyMailer
       :options => {:dummy_options => {}}
     }
 
-    @@config_file = "#{File.dirname(__FILE__)}/../../config/settings.yaml"
-
     def initialize
-      user_settings = File.exists?(@@config_file) ? YAML.load_file(@@config_file) : {}
-      @@defaults.each_pair do |key, value|
-        value = user_settings[key.to_s] if user_settings.include?(key.to_s)
-        self.send("#{key}=".to_sym,value)
-      end
+      @@defaults.each_pair{|key, value| self.send("#{key}=".to_sym,value)}
     end
 
     def method_missing(*args)
