@@ -1,0 +1,24 @@
+adapter: dummy
+mandril_api_key: your_api_key
+smtp:
+  address: smtp.mandrillapp.com
+  port: 587
+  domain: example.com
+  user_name: user
+  password: password
+  authentication: plain
+  enable_starttls_auto: true
+urgent_quota: 1
+normal_quota: 1
+low_quota: 1
+normal_sleep: 12
+low_sleep: 54
+sleep: 1
+loader: database
+databases:
+  default:
+    adapter: mysql
+    host: localhost
+    username: root
+    password: password
+    database: your_database

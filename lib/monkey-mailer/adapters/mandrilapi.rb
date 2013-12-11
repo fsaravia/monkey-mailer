@@ -2,8 +2,8 @@ require "net/http"
 require "uri"
 require "json"
 
-module Postman
-  class MandrilAPI 
+module MonkeyMailer
+  class MandrilAPI
     @key = ''
     @request = {}
     @uri = ''
@@ -16,7 +16,7 @@ module Postman
       @uri = URI.parse(URI.encode(ENDPOINT))
     end
 
-    def send_mail(email)
+    def send_email(email)
 
       @request = {
         :key => '',
@@ -36,12 +36,12 @@ module Postman
           :bcc_address => '',
         },
         :async => true
-      }.to_hash
+      }
 
       @request[:key] = @key
-      @request[:message][:to] << { :email => email.to, :name => ''}
-      @request[:message][:from_name] = email.from
-      @request[:message][:from_email] = 'info@plupin.com'
+      @request[:message][:to] << { :email => email.to_email, :name => email.to_name}
+      @request[:message][:from_name] = email.from_name
+      @request[:message][:from_email] = email.from_email
       @request[:message][:html] = email.body
       @request[:message][:text] = email.body.gsub(/<\/?[^>]*>/, "")
       @request[:message][:subject] = email.subject
@@ -52,7 +52,7 @@ module Postman
       http = Net::HTTP.new(@uri.host, @uri.port)
       http.use_ssl = true
       response = http.start {|http| http.request(req)}
-      raise DeliverError.new("Mandrill response.code not equal to 200") unless response.code.to_i == 200
+      raise DeliverError.new("Mandril response.code not equal to 200") unless response.code.to_i == 200
       puts "Response #{response.code} #{response.message}: #{response.body}"
     end
   end
