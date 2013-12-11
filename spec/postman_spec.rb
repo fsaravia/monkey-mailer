@@ -19,6 +19,7 @@ describe MonkeyMailer do
 
   before :each do
     MonkeyMailer.reset_loader
+    MonkeyMailer.configuration.fake_loader_options = {:urgent => [], :normal => [], :low => []}
     @adapter = MonkeyMailer::TestAdapter.new
     MonkeyMailer.class_variable_set(:@@adapter, @adapter)
     MonkeyMailer.class_variable_set(:@@normal_sleep, 0)

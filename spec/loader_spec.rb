@@ -26,7 +26,7 @@ describe MonkeyMailer do
     end
 
     it 'should not register the loader if one has been already registered' do
-      MonkeyMailer.class_variable_set(:@@loader, MonkeyMailer::Loaders::FakeLoader.new)
+      MonkeyMailer.class_variable_set(:@@loader, MonkeyMailer::Loaders::FakeLoader.new({}))
       MonkeyMailer.loader.should be_an_instance_of MonkeyMailer::Loaders::FakeLoader
     end
   end

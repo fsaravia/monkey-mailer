@@ -3,8 +3,8 @@ module MonkeyMailer::Loaders
 
     attr_accessor :queue
 
-    def initialize(opts=nil)
-      @queue = {:urgent => [], :normal => [], :low => []}
+    def initialize(initial_queue)
+      @queue = initial_queue
     end
 
     def find_emails(priority, quota)

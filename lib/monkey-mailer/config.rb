@@ -50,7 +50,7 @@ module MonkeyMailer
     def method_missing(*args)
       super unless args[0].to_s.end_with?('_options', 'options=')
       if args[0].to_s.end_with?('=')
-        options[args[0]] = args[1]
+        options[args[0].to_s.chop.to_sym] = args[1]
       else
         options[args[0]]
       end
