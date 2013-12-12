@@ -1,7 +1,6 @@
-root = ::File.dirname(__FILE__)
-require ::File.join(root,'..', 'lib', 'monkey-mailer')
+require 'monkey-mailer'
 
-Dir[::File.join(root, "support/**/*.rb")].each { |f| require f }
+Dir[::File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
 

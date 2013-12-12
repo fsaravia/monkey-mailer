@@ -1,4 +1,4 @@
-require_relative 'loaders/dummy'
+require 'monkey-mailer/loaders/dummy'
 
 module MonkeyMailer
 

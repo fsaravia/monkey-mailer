@@ -28,13 +28,13 @@ module MonkeyMailer
   def self.register_adapter
     case MonkeyMailer.configuration.adapter
     when 'mandrilapi'
-      require_relative 'adapters/mandrilapi'
+      require 'monkey-mailer/adapters/mandrilapi'
       @@adapter = MonkeyMailer::MandrilAPI.new(MonkeyMailer.configuration.mandril_api_key)
     when 'smtp'
-      require_relative 'adapters/smtp'
+      require 'monkey-mailer/adapters/smtp'
       @@adapter = MonkeyMailer::Smtp.new(MonkeyMailer.configuration.smtp)
     when 'dummy'
-      require_relative 'adapters/dummy'
+      require 'monkey-mailer/adapters/dummy'
       @@adapter = MonkeyMailer::Dummy.new
     else
       raise "Adapter #{MonkeyMailer.configuration.adapter} does not exist"
