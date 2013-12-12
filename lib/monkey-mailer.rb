@@ -21,23 +21,23 @@ module MonkeyMailer
     emails = []
 
     #Urgent emails
-    emails.concat MonkeyMailer.find_emails(:urgent, MonkeyMailer.configuration.urgent_quota)
+    emails.concat loader.find_emails(:urgent, MonkeyMailer.configuration.urgent_quota)
 
-    if(@@normal_sleep == MonkeyMailer.configuration.normal_sleep)
-      emails.concat MonkeyMailer.find_emails(:normal, MonkeyMailer.configuration.normal_quota)
+    if(@@normal_sleep == configuration.normal_sleep)
+      emails.concat loader.find_emails(:normal, MonkeyMailer.configuration.normal_quota)
       @@normal_sleep = 0
     else
       @@normal_sleep += 1
     end
 
-    if(@@low_sleep == MonkeyMailer.configuration.low_sleep)
-      emails.concat MonkeyMailer.find_emails(:low, MonkeyMailer.configuration.low_quota)
+    if(@@low_sleep == configuration.low_sleep)
+      emails.concat loader.find_emails(:low, MonkeyMailer.configuration.low_quota)
       @@low_sleep = 0
     else
       @@low_sleep += 1
     end
 
-    MonkeyMailer.send_emails(emails)
+    send_emails(emails)
   end
 
   def run

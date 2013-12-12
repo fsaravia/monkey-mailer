@@ -12,21 +12,19 @@ module MonkeyMailer
     @@adapter = nil
   end
 
-  def self.deliver(email)
-    adapter.send_email(email)
-  end
-
   def self.send_emails(emails)
     emails.each do |email|
       begin
-        deliver(email)
-        delete_email(email)
+        adapter.send_email(email)
+        loader.delete_email(email)
       rescue DeliverError => e
         puts e.message
         puts e.backtrace
       end
     end
   end
+
+  class DeliverError < StandardError; end
 
   private
   def self.register_adapter
