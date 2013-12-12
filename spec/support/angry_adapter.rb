@@ -1,7 +1,11 @@
-module MonkeyMailer
+module MonkeyMailer::Adapters
   class AngryAdapter
+
+    def initialize(args=nil)
+    end
+
     def send_email(email)
-      raise DeliverError, "Just testing, don't panic"
+      raise MonkeyMailer::DeliverError, "Just testing, don't panic"
     end
   end
 end

@@ -1,9 +1,9 @@
-module MonkeyMailer
+module MonkeyMailer::Adapters
   class TestAdapter
 
     attr_accessor :sent_emails
 
-    def initialize
+    def initialize(args=nil)
       @sent_emails = []
     end
 

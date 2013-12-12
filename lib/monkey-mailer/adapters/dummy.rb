@@ -1,8 +1,13 @@
 module MonkeyMailer
-  class Dummy
+  module Adapters
+    class Dummy
 
-    def send_email(email)
-      puts email.inspect
+      def initialize(options)
+      end
+
+      def send_email(email)
+        puts email.inspect
+      end
     end
   end
 end

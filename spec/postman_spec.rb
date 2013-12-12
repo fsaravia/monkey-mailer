@@ -20,7 +20,7 @@ describe MonkeyMailer do
   before :each do
     MonkeyMailer.reset_loader
     MonkeyMailer.configuration.loader_options = {:urgent => [], :normal => [], :low => []}
-    @adapter = MonkeyMailer::TestAdapter.new
+    @adapter = MonkeyMailer::Adapters::TestAdapter.new
     MonkeyMailer.class_variable_set(:@@adapter, @adapter)
     MonkeyMailer.class_variable_set(:@@normal_sleep, 0)
     MonkeyMailer.class_variable_set(:@@low_sleep, 0)
@@ -122,7 +122,7 @@ describe MonkeyMailer do
 
   it 'should not delete the email if delivery failed' do
     MonkeyMailer.reset_adapter
-    MonkeyMailer.class_variable_set(:@@adapter, MonkeyMailer::AngryAdapter.new)
+    MonkeyMailer.configuration.adapter = MonkeyMailer::Adapters::AngryAdapter
     MonkeyMailer.loader.queue[:urgent] << MonkeyMailer::Email.fake(:urgent)
     previous_stdout, $stdout = $stdout, StringIO.new #Redirect stdout to avoid seeing backtrace on console
     MonkeyMailer.find_and_deliver

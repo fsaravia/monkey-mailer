@@ -5,7 +5,7 @@ describe MonkeyMailer do
 
     before :all do
       MonkeyMailer.configure do |config|
-        config.adapter = 'dummy'
+        config.adapter = MonkeyMailer::Adapters::Dummy
       end
     end
 
@@ -22,20 +22,8 @@ describe MonkeyMailer do
     end
 
     it 'should not register the adapter if one has been already registered' do
-      MonkeyMailer.class_variable_set(:@@adapter, MonkeyMailer::TestAdapter.new)
-      MonkeyMailer.adapter.should be_an_instance_of MonkeyMailer::TestAdapter
-    end
-
-    it 'should register the different avaliable adapters' do
-      MonkeyMailer.reset_adapter
-      MonkeyMailer.configuration.adapter = 'smtp'
-      MonkeyMailer.adapter.should be_an_instance_of MonkeyMailer::Smtp
-      MonkeyMailer.reset_adapter
-      MonkeyMailer.configuration.adapter = 'mandrilapi'
-      MonkeyMailer.adapter.should be_an_instance_of MonkeyMailer::MandrilAPI
-      MonkeyMailer.reset_adapter
-      MonkeyMailer.configuration.adapter = 'dummy'
-      MonkeyMailer.adapter.should be_an_instance_of MonkeyMailer::Dummy
+      MonkeyMailer.class_variable_set(:@@adapter, MonkeyMailer::Adapters::TestAdapter.new)
+      MonkeyMailer.adapter.should be_an_instance_of MonkeyMailer::Adapters::TestAdapter
     end
   end
 end
