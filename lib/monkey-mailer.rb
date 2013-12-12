@@ -9,7 +9,10 @@ require 'monkey-mailer/loader'
 
 module MonkeyMailer
   extend Fallen
-  extend Fallen::CLI
+
+  def self.extended(base)
+    base.extend(Fallen)
+  end
 
   @@normal_sleep = 0
   @@low_sleep = 0
@@ -37,21 +40,10 @@ module MonkeyMailer
     MonkeyMailer.send_emails(emails)
   end
 
-  def self.run
+  def run
     while running?
       MonkeyMailer.find_and_deliver
       sleep MonkeyMailer.configuration.sleep
     end
   end
 end
-
-case Clap.run(ARGV, MonkeyMailer.cli).first
-
-when "start"
-  MonkeyMailer.start!
-when "stop"
-  MonkeyMailer.stop!
-when "usage", "help"
-  puts MonkeyMailer.fallen_usage
-end
-
