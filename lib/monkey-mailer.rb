@@ -3,9 +3,9 @@ require 'fallen'
 require 'fallen/cli'
 require 'yaml'
 require 'monkey-mailer/email'
-require 'monkey-mailer/config'
 require 'monkey-mailer/adapter'
 require 'monkey-mailer/loader'
+require 'monkey-mailer/config'
 
 module MonkeyMailer
   extend Fallen

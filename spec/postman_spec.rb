@@ -9,7 +9,7 @@ describe MonkeyMailer do
       config.low_quota = 2
       config.normal_sleep = 1
       config.low_sleep = 2
-      config.loader = 'fake_loader'
+      config.loader = MonkeyMailer::Loaders::FakeLoader
     end
   end
 
@@ -19,7 +19,7 @@ describe MonkeyMailer do
 
   before :each do
     MonkeyMailer.reset_loader
-    MonkeyMailer.configuration.fake_loader_options = {:urgent => [], :normal => [], :low => []}
+    MonkeyMailer.configuration.loader_options = {:urgent => [], :normal => [], :low => []}
     @adapter = MonkeyMailer::TestAdapter.new
     MonkeyMailer.class_variable_set(:@@adapter, @adapter)
     MonkeyMailer.class_variable_set(:@@normal_sleep, 0)

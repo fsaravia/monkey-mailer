@@ -12,7 +12,7 @@ module MonkeyMailer
 
     attr_accessor :adapter, :mandril_api_key, :smtp, :urgent_quota,
     :normal_quota, :low_quota, :normal_sleep, :low_sleep, :sleep, :options,
-    :loader
+    :loader, :loader_options
 
     @@defaults = {
       :adapter => 'mandrilapi',
@@ -33,21 +33,12 @@ module MonkeyMailer
       :normal_sleep => 12,
       :low_sleep => 54,
       :sleep => 5,
-      :loader => 'dummy',
-      :options => {:dummy_options => {}}
+      :loader => MonkeyMailer::Loaders::Dummy,
+      :loader_options => {}
     }
 
     def initialize
       @@defaults.each_pair{|key, value| self.send("#{key}=".to_sym,value)}
-    end
-
-    def method_missing(*args)
-      super unless args[0].to_s.end_with?('_options', 'options=')
-      if args[0].to_s.end_with?('=')
-        options[args[0].to_s.chop.to_sym] = args[1]
-      else
-        options[args[0]]
-      end
     end
   end
 end
