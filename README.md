@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fsaravia/monkey-mailer.png)](https://travis-ci.org/fsaravia/monkey-mailer)
+
 Monkey Mailer
 ======
 
