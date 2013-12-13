@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/fsaravia/monkey-mailer.png)](https://travis-ci.org/fsaravia/monkey-mailer)
+[![Code Climate](https://codeclimate.com/github/fsaravia/monkey-mailer.png)](https://codeclimate.com/github/fsaravia/monkey-mailer)
 
 Monkey Mailer
 ======
