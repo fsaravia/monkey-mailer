@@ -12,7 +12,7 @@ After setup, Monkey Mailer can be configured to run and process your emails in a
 The principle behind MonkeyMailer's functionality is simple, it runs an infinite loop, within that loop it asks the `adapter` for emails to send. And this is where priority becomes important:
 * `Urgent` mails are loaded and sent on every iteration
 * `Normal` and `Low` priority emails are loaded and sent after a certain number of iterations have passed  
-Also, in order to avoid problems with your email provider, all priorities have a quota, so if there are many urgent emails to send, MonkeyMailer will onli load and send a certain number on each iteration  
+Also, in order to avoid problems with your email provider, all priorities have a quota, so if there are many urgent emails to send, MonkeyMailer will only load and send a certain number on each iteration  
 
 ## Instalation
     gem install monkey-mailer
