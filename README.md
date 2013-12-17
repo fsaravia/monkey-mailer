@@ -5,10 +5,14 @@ Monkey Mailer
 ======
 
 ## Description
-Monkey Mailer is a gem that allows handling a mailing queue, it supports email priority (urgent, normal and low priorities) and is higly customizable.  
-Emails can be loaded from different data sources using Loader gems (See below), feel free to contribute a loader with your preferred datastore!  
-Once loaded, emails can be sent using either SMTP or [Mailchimp's Mandril API](http://mandrill.com/)  
-After setup, Monkey Mailer can be configured to run and process your emails in a infinite loop until you stop it, it uses the [fallen](https://github.com/inkel/fallen/) gem, to run as a daemon in your server
+Monkey Mailer is a gem that allows building a service for handling an email queue, it supports priority (urgent, normal and low priorities) and is higly customizable.  
+Emails can be loaded from different data sources using `loader` plugins (See below), it uses priority to determine which mails will be sent as soon as they are queued and which mails can wait  
+Once loaded, emails can be sent using either SMTP or [Mailchimp's Mandril API](http://mandrill.com/), they are `adapters` and, as with `loaders`, MonkeyMailer can be easily extended to work with the email provider of your choice  
+After setup, Monkey Mailer can be configured to run and process your emails in a infinite loop until you stop it, it uses the [fallen](https://github.com/inkel/fallen/) gem, to run as a daemon in your server  
+The principle behind MonkeyMailer's functionality is simple, it runs an infinite loop, within that loop it asks the `adapter` for emails to send. And this is where priority becomes important:
+* `Urgent` mails are loaded and sent on every iteration
+* `Normal` and `Low` priority emails are loaded and sent after a certain number of iterations have passed  
+Also, in order to avoid problems with your email provider, all priorities have a quota, so if there are many urgent emails to send, MonkeyMailer will onli load and send a certain number on each iteration  
 
 ## Instalation
     gem install monkey-mailer
@@ -31,10 +35,10 @@ Adapters are classes that send your emails using different providers. MonkeyMail
 * `MonkeyMailer::Adapters::MandrilAPI`
 * `MonkeyMailer::Adapters::Smtp`
 
-Any adapter receives its settings by setting up MonkeyMailer.configuration.adapter_options, check out each loader for specific options
+Any adapter receives its settings by setting up MonkeyMailer.configuration.adapter_options, check out each one for specific options
 
 ##Dummy loader and adapter
-Test adapter and loader are provided within MonkeyMailer so you can play with them for testing purposes:  
+Test adapter and loader are provided within MonkeyMailer so you can play with them:  
 
 * Dummy loader: `MonkeyMailer::Loaders::Dummy` # It generates random emails for adapters to consume  
 * Dummy adapter: `MonkeyMailer::Adapters::Dummy` # It just displays the email content on stdout  
@@ -97,6 +101,27 @@ You can also build your own loader gem, we have thought of some ideas about load
 * mm-yaml  
 * mm-redis  
 * mm-your-storage-of-choice  
+
+## Building your own loader
+It is painfully easy to write your own loader, just create a class inside `MonkeyMailer::Loaders` module and define this three methods:
+```ruby
+  def initialize(opts)
+    # The content of MonkeyMailer.loader_options will be available on opts
+  end
+
+  def find_emails(priority, quota)
+    # Return an array of emails with the given priority with a limit of quota
+  end
+
+  def delete_email(end)
+    # Delete the email from your data storage, this method will only be called if email sent
+    # was successful
+  end
+```
+
+## List of known loaders:
+
+* [mm-data_mapper](https://github.com/fsaravia/mm-data_mapper): Uses the DataMapper gem to load emails from a database
 
 ## License
 See the `UNLICENSE` file included with this gem distribution.
