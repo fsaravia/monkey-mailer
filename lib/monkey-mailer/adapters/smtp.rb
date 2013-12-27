@@ -30,7 +30,7 @@ module MonkeyMailer
           end
 
           text_part do
-            body email.body.gsub(/<\/?[^>]*>/, "")
+            body email.body.nil? ? '' : email.body.gsub(/<\/?[^>]*>/, "")
           end
         end
       end

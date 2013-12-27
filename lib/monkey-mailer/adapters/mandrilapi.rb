@@ -44,7 +44,7 @@ module MonkeyMailer
         @request[:message][:from_name] = email.from_name
         @request[:message][:from_email] = email.from_email
         @request[:message][:html] = email.body
-        @request[:message][:text] = email.body.gsub(/<\/?[^>]*>/, "")
+        @request[:message][:text] = email.body.gsub(/<\/?[^>]*>/, "") unless email.body.nil?
         @request[:message][:subject] = email.subject
 
         req = Net::HTTP::Post.new('/api/1.0/messages/send.json', initheader = {'Content-Type' =>'application/json'})
