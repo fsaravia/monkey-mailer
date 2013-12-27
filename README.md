@@ -52,7 +52,7 @@ Test adapter and loader are provided within MonkeyMailer so you can play with th
     extend MonkeyMailer
 
     MonkeyMailer.configure do |config|
-      config.adapter = MonkeyMailer::Adapters::MandrilAPI, # Method used to send emails
+      config.adapter = MonkeyMailer::Adapters::MandrilAPI # Method used to send emails
       config.adapter_options = {:mandril_api_key => 'YOUR_API_KEY'}
       config.loader = MonkeyMailer::Loaders::DataMapper #Uses the loader on mm-data_mapper gem to load emails from a database
       config.loader_options = {
