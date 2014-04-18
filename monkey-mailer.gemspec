@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- spec/*`.split("\n")
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'clap', '>= 1.0.0'
-  spec.add_dependency 'fallen', '>= 0.0.2'
-  spec.add_dependency 'mail', '>= 2.4.4'
-  spec.add_development_dependency 'rspec', '>= 2.12.0'
+  spec.add_dependency 'clap', '~> 1.0', '>= 1.0.0'
+  spec.add_dependency 'fallen', '~> 0.0', '>= 0.0.3'
+  spec.add_dependency 'mail', '~> 2.4','>= 2.4.4'
+  spec.add_development_dependency 'rspec', '~> 2.12', '>= 2.12.0'
 end
