@@ -24,6 +24,10 @@ module MonkeyMailer
           from "#{email.from_name} <#{email.from_email}>"
           subject email.subject
 
+          email.attachments.each do |attachment|
+            add_file :filename => File.basename(attachment.file_path), :content => File.read(attachment.file_path)
+          end
+
           html_part do
             content_type 'text/html; charset=UTF-8'
             body email.body
