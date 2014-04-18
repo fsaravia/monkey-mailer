@@ -6,29 +6,27 @@ require 'base64'
 module MonkeyMailer
   module Adapters
     class MandrilAPI
-      @key = ''
-      @request = {}
-      @uri = ''
 
-      ENDPOINT = 'https://mandrillapp.com/api/1.0'
+      @key = ''
 
       def initialize(options)
         @key = options[:mandril_api_key]
-        @request = Hash.new
-        @uri = URI.parse(URI.encode(ENDPOINT))
       end
 
       def send_email(email)
 
-        @request = {
-          :key => '',
+        request_body = {
+          :key => @key,
           :message => {
-            :html => '',
-            :text => '',
-            :subject => '',
-            :from_email => '',
-            :from_name => '',
-            :to => [],
+            :to => [{
+              :email => email.to_email,
+              :name => email.to_name
+            }],
+            :from_name => email.from_name,
+            :from_email => email.from_email,
+            :subject => email.subject,
+            :html => email.body,
+            :text => email.body.to_s.gsub(/<\/?[^>]*>/, ""),
             :headers => {},
             :track_opens => true,
             :track_clicks => true,
@@ -38,32 +36,26 @@ module MonkeyMailer
             :bcc_address => '',
             :attachments => []
           },
-          :async => true
+          :async => false
         }
 
-        @request[:key] = @key
-        @request[:message][:to] << { :email => email.to_email, :name => email.to_name}
-        @request[:message][:from_name] = email.from_name
-        @request[:message][:from_email] = email.from_email
-        @request[:message][:html] = email.body
-        @request[:message][:text] = email.body.gsub(/<\/?[^>]*>/, "") unless email.body.nil?
-        @request[:message][:subject] = email.subject
-
         email.attachments.each do |attachment|
-          @request[:message][:attachments] << {
+          request_body[:message][:attachments] << {
             :type => attachment.content_type,
             :name => File.basename(attachment.file_path),
             :content => Base64.encode64(File.read(attachment.file_path))
           }
         end
 
-
-        req = Net::HTTP::Post.new('/api/1.0/messages/send.json', initheader = {'Content-Type' =>'application/json'})
-        req.body = @request.to_json
-
-        http = Net::HTTP.new(@uri.host, @uri.port)
+        uri = URI('https://mandrillapp.com')
+        http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
-        response = http.start {|http| http.request(req)}
+
+        request = Net::HTTP::Post.new('/api/1.0/messages/send.json', initheader = {'Content-Type' =>'application/json'})
+        request.body = request_body.to_json
+
+        response = http.start {|http| http.request(request)}
+
         raise MonkeyMailer::DeliverError.new("Mandril response.code not equal to 200") unless response.code.to_i == 200
         puts "Response #{response.code} #{response.message}: #{response.body}"
       end
