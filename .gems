@@ -1,0 +1,4 @@
+clap -v 1.0.0
+fallen -v 0.0.3
+mail -v 2.4.4
+rspec -v 2.12.0
