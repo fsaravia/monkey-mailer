@@ -1,5 +1,6 @@
 language: ruby
 
-script: "bundle exec rspec"
+script: "rspec"
 before_install:
-  - gem install bundler
+  - gem install dep
+  - dep install
