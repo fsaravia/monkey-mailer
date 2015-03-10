@@ -57,7 +57,7 @@ module MonkeyMailer
         puts "Response #{response.code} #{response.message}: #{response.body}"
       end
 
-      def parse_recipients(recipients_list, names_list = "", type = :to)
+      def parse_recipients(recipients_list, names_list = "")
         recipients = recipients_list.split(",")
         names      = names_list.to_s.split(",")
         to_list    = []
@@ -71,7 +71,7 @@ module MonkeyMailer
         recipients.each_with_index do |recipient, idx|
           to_list << { "email" => recipient.strip,
                        "name" => names[idx] ? names[idx].strip : "",
-                       "type" => type.to_s }
+                       "type" => "to" }
         end
 
         to_list
