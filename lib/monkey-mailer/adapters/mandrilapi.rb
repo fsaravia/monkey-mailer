@@ -18,10 +18,7 @@ module MonkeyMailer
         request_body = {
           :key => @key,
           :message => {
-            :to => [{
-              :email => email.to_email,
-              :name => email.to_name
-            }],
+            :to => parse_recipients(email.to_email, email.to_name),
             :from_name => email.from_name,
             :from_email => email.from_email,
             :subject => email.subject,
@@ -59,6 +56,25 @@ module MonkeyMailer
         raise MonkeyMailer::DeliverError.new("Mandril response.code not equal to 200") unless response.code.to_i == 200
         puts "Response #{response.code} #{response.message}: #{response.body}"
       end
+
+      def parse_recipients(recipients_list, names_list = "", type = :to)
+        recipients = recipients_list.split(",")
+        names      = names_list.split(",")
+        to_list    = []
+
+        raise RuntimeError.new("No recipients specified") if recipients.empty?
+
+        if names.any? && (names.count != recipients.count)
+          raise RuntimeError.new("Recipients and Names lists don't match")
+        end
+
+        recipients.each_with_index do |recipient, idx|
+          to_list << { "email" => recipient.strip, "name" => names[idx].strip, "type" => type.to_s }
+        end
+
+        to_list
+      end
+
     end
   end
 end
