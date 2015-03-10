@@ -69,7 +69,9 @@ module MonkeyMailer
         end
 
         recipients.each_with_index do |recipient, idx|
-          to_list << { "email" => recipient.strip, "name" => names[idx].strip, "type" => type.to_s }
+          to_list << { "email" => recipient.strip,
+                       "name" => names[idx] ? names[idx].strip : "",
+                       "type" => type.to_s }
         end
 
         to_list
